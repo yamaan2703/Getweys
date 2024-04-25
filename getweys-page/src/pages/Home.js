@@ -375,7 +375,7 @@ function Home() {
         </div>
 
         <div className="section_9">
-          <div className="container p-5">
+          <div className="container p-5 mb-24">
             <div className="flex flex-col justify-center items-center text-center pt-10">
               <p className="text-[#ec193f] font-bold py-5">GET IN TOUCH</p>
               <h1 className="text-3xl md:text-3xl lg:text-4xl font-semibold text-gray-800 py-2">

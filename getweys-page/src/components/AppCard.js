@@ -51,7 +51,7 @@ const AppCard = () => {
     <>
     <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
       {cardData.map((card, index) => (
-          <div key={index} className="flex flex-col justify-center items-center text-center rounded py-10 px-5 shadow-xl">
+          <div key={index} className="main2 flex flex-col justify-center items-center text-center rounded py-10 px-5 shadow-xl">
           <div className="icon text-4xl hover:shadow-xl p-5 rounded-full my-4">
             {card.icon}
           </div>

@@ -14,3 +14,11 @@
   background-color: #ec193f;
   color: white;
 }
+
+.main2 .icon {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.main2:hover .icon {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Adjust the values as needed */
+}
