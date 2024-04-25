@@ -6,3 +6,11 @@
   margin: 0%;
   padding: 0%;
 }
+.main .icon {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.main:hover .icon {
+  background-color: #ec193f;
+  color: white;
+}
