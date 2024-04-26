@@ -4,7 +4,7 @@ export default function AppBtn(props) {
     return (
       <button
         onClick={onClick}
-        className="text-white bg-[#7A52F4] font-semibold py-2 px-6 rounded-full"
+        className="text-white bg-[#7A52F4] hover:bg-[#4b3393] font-semibold py-2 px-6 rounded-full"
       >
         {icon && <span className="mr-2">{icon}</span>}
         {label}

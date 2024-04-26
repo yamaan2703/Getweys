@@ -2,16 +2,16 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import art1 from "../images/art1.png";
-import art2 from "../images/art2.png";
-import art3 from "../images/art3.png";
 import img1 from "../images/img1.png";
 import img2 from "../images/img2.png";
 import img3 from "../images/img3.png";
 import img4 from "../images/img4.png";
 import img5 from "../images/img5.png";
 import img6 from "../images/img6.png";
-import { TbUrgent } from "react-icons/tb";
+import img7 from "../images/img7.png";
+import img8 from "../images/img8.png";
+import img9 from "../images/img9.png";
+
 
 function AppCarousel() {
   const slidesData = [
@@ -19,37 +19,37 @@ function AppCarousel() {
       id: 1,
       title: "Celestial Spirits",
       items: 2222,
-      images: [art1, img1, img2],
+      images: [img7, img1, img2],
     },
     {
       id: 2,
       title: "Celestial Spirits",
       items: 2222,
-      images: [art2, img3, img4],
+      images: [img8, img3, img4],
     },
     {
       id: 3,
       title: "Celestial Spirits",
       items: 2222,
-      images: [art3, img5, img6],
+      images: [img9, img5, img6],
     },
     {
         id: 4,
         title: "Celestial Spirits",
         items: 2222,
-        images: [art3, img5, img6],
+        images: [img7, img5, img6],
       },
       {
         id: 5,
         title: "Celestial Spirits",
         items: 2222,
-        images: [art3, img5, img6],
+        images: [img8, img5, img6],
       },
       {
         id: 6,
         title: "Celestial Spirits",
         items: 2222,
-        images: [art3, img5, img6],
+        images: [img9, img5, img6],
       },
 
   ];
@@ -97,7 +97,7 @@ function AppCarousel() {
             <div className="bg-white p-5 m-2 shadow-xl rounded-xl">
               <div className="flex">
                 <div>
-                  <img src={slide.images[0]} className="w-[210px] m-1 px-1" alt="Art" />
+                  <img src={slide.images[0]} className="m-1 px-1" alt="Art" />
                 </div>
                 <div>
                   <img src={slide.images[1]} className="m-1" alt="Image 1" />

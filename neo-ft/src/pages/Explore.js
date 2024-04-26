@@ -11,7 +11,21 @@ import art7 from "../images/art7.png";
 import art8 from "../images/art8.png";
 import art9 from "../images/art9.png";
 import art10 from "../images/art10.png";
+import img7 from "../images/img7.png";
+import img10 from "../images/img10.png";
+import img11 from "../images/img11.png";
+import img12 from "../images/img12.png";
+import img13 from "../images/img13.png";
+import img14 from "../images/img14.png";
+import img15 from "../images/img15.png";
+import img16 from "../images/img16.png";
+import img17 from "../images/img17.png";
+
 import AppCarousel from "../components/AppCarousel";
+import AppBtn from "../components/AppBtn";
+
+import { FaArrowRight } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 
 function Explore() {
   const collectionData = [
@@ -69,7 +83,7 @@ function Explore() {
         </div>
 
         <div className="section_2">
-          <div className="container mt-12 mb-10">
+          <div className="container mt-12 mb-10 p-0 md:p-0 lg:p-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-2 md:p-2 lg:px-10">
               <div className="text-center">
                 <h2 className="text-xl md:text-xl lg:text-2xl font-bold p-3 rounded-full shadow-xl w-[250px] md:w-[250px] lg:w-[300px]">
@@ -123,14 +137,158 @@ function Explore() {
         </div>
 
         <div className="section_3 bg-gray-100">
-         <div className="container p-5">
-          <h1 className="px-5 py-3 text-3xl font-bold">Recommanded Collections</h1>
-           
-           <div className="p-5">
-           <AppCarousel />
-           </div>
-         </div>
+          <div className="container p-5 md:p-5 lg:p-10">
+            <h1 className="px-0 md:px-0 lg:px-5 py-0 md:py-0 lg:py-3 text-xl md:text-xl lg:text-2xl font-bold">
+              Recommanded Collections
+            </h1>
+
+            <div className="p-5">
+              <AppCarousel />
+            </div>
+          </div>
         </div>
+
+        <div className="section_4">
+          <div className="container p-10">
+            <div className="flex md:flex-col lg:flex-row items-center justify-between">
+              <div>
+                <h1 className="px-2 md:px-2 lg:px-5 py-2 md:py-2 lg:py-3 text-xl md:text-xl lg:text-2xl font-bold">
+                  Active Mints
+                </h1>
+              </div>
+              <div className="flex">
+                <div>
+                  <AppBtn label="Explore more" />
+                </div>
+                <div className="flex items-center justify-center">
+                  <div className="border-2 border-gray-300 p-3 rounded-full text-lg text-gray-700 mx-1">
+                    <FaArrowLeft />
+                  </div>
+                  <div className="border-2 border-gray-300 p-3 rounded-full text-lg text-gray-700 mx-1">
+                    <FaArrowRight />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 my-2">
+              {[
+                {
+                  img: img13,
+                  title: "Celestial Spirits",
+                  price: "20 XRP",
+                  collectionSize: "2222",
+                },
+                {
+                  img: img10,
+                  title: "AI Dude",
+                  price: "20 XRP",
+                  collectionSize: "10 000",
+                },
+                {
+                  img: img11,
+                  title: "Pixel World",
+                  price: "100 XRP",
+                  collectionSize: "10 000",
+                },
+                {
+                  img: img12,
+                  title: "Red Ball",
+                  price: "5 XRP",
+                  collectionSize: "10 000",
+                },
+              ].map((item, index) => (
+                <div
+                  key={index}
+                  className="border-2 border-gray-500 rounded-2xl p-3"
+                >
+                  <div className="px-3 my-3">
+                    <AppBtn label="Live Now" />
+                  </div>
+                  <div className="px-3">
+                    <img src={item.img} alt={item.title} className=""/>
+                  </div>
+                  <div className="px-3 py-1">
+                    <h1 className="font-bold text-lg">{item.title}</h1>
+                    <p className="text-sm">
+                      Price <span className="font-bold">{item.price}</span>
+                    </p>
+                    <p className="text-sm">
+                      Collection Size{" "}
+                      <span className="font-bold">{item.collectionSize}</span>
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="section_5">
+          <div className="container p-10">
+          <h1 className="px-0 md:px-0 lg:px-5 py-0 md:py-0 lg:py-3 text-xl md:text-xl lg:text-2xl font-bold text-center">
+              Browse All NFT Collections
+            </h1>
+            <hr />
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 my-2">
+              {[
+                {
+                  img: img14,
+                  title: "xCub3es",
+                  desc: "by Svyatoslav taushev",
+                  price: "100 XRP",
+                  collectionSize: "10 000",
+                },
+                {
+                  img: img15,
+                  title: "Eye Buddies",
+                  desc: "by Angela Longoria",
+                  price: "80 XRP",
+                  collectionSize: "10 000",
+                },
+                {
+                  img: img16,
+                  title: "Monsters World",
+                  desc: "by Mathijn Agter",
+                  price: "87 XRP",
+                  collectionSize: "10 000",
+                },
+                {
+                  img: img17,
+                  title: "Crazy Professor",
+                  price: "200 XRP",
+                  collectionSize: "10 000",
+                },
+              ].map((item, index) => (
+                <div
+                  key={index}
+                  className="border border-gray-500 rounded-2xl"
+                >
+                  <div className="">
+                    <img src={item.img} alt={item.title} className=""/>
+                  </div>
+                  <div className="px-3 py-3">
+                    <h1 className="font-bold text-lg text-center">{item.title}</h1>
+                    <p className="text-center text-gray-500">{item.desc}</p>
+                    <div className="mt-5 flex justify-between items-center"> 
+                    <p className="text-sm">
+                      Floor Price <span className="font-bold">{item.price}</span>
+                    </p>
+                    <p className="text-sm">
+                      items{" "}
+                      <span className="font-bold">{item.collectionSize}</span>
+                    </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="flex justify-center items-center my-5">
+              <AppBtn label="Load More"/>
+            </div>
+          </div>
+        </div>
+
       </div>
     </>
   );
