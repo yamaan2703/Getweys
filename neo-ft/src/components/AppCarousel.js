@@ -94,7 +94,7 @@ function AppCarousel() {
       <Slider {...settings} className="slick-slider">
         {slidesData.map((slide) => (
           <div key={slide.id} className="slick-slide">
-            <div className="bg-white p-5 m-2 shadow-xl rounded-xl">
+            <div className=" p-5 m-2 md:m-2 lg:m-5 shadow-lg shadow-gray-500 rounded-xl">
               <div className="flex">
                 <div>
                   <img src={slide.images[0]} className="m-1 px-1" alt="Art" />

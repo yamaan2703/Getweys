@@ -26,6 +26,7 @@ import AppBtn from "../components/AppBtn";
 
 import { FaArrowRight } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
+import AppServiceCarousel from "../components/AppServiceCarousel";
 
 function Explore() {
   const collectionData = [
@@ -83,10 +84,10 @@ function Explore() {
         </div>
 
         <div className="section_2">
-          <div className="container mt-12 mb-10 p-0 md:p-0 lg:p-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-2 md:p-2 lg:px-10">
+          <div className="container mt-12 mb-10 p-2 md:p-2 lg:p-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-5">
               <div className="text-center">
-                <h2 className="text-xl md:text-xl lg:text-2xl font-bold p-3 rounded-full shadow-xl w-[250px] md:w-[250px] lg:w-[300px]">
+                <h2 className="text-xl md:text-xl lg:text-2xl font-bold p-3 rounded-2xl shadow-lg shadow-gray-500 w-[250px] md:w-[250px] lg:w-[300px]">
                   Top XRPL Collections
                 </h2>
               </div>
@@ -94,20 +95,20 @@ function Explore() {
                 <p className="text-[#7A52F4] bg-purple-200 hover:text-white hover:bg-[#7A52F4] px-6 p-2 rounded-full mx-1 font-bold">
                   1 Day
                 </p>
-                <p className="px-5 p-2 rounded-full mx-1 font-bold border-2 border-gray-300">
+                <p className="px-5 p-2 rounded-full mx-1 font-bold border border-gray-300">
                   7 Days
                 </p>
-                <p className="px-5 p-2 rounded-full mx-1 font-bold border-2 border-gray-300">
+                <p className="px-5 p-2 rounded-full mx-1 font-bold border border-gray-300">
                   30 Days
                 </p>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 p-2 md:p-2 lg:p-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 px-3 ">
               {collectionData.map((item) => (
                 <div
                   key={item.id}
-                  className="border-2 border-gray-300 rounded-xl flex justify-between items-center p-1"
+                  className="border border-gray-300 rounded-xl flex justify-between items-center p-1"
                 >
                   <div className="flex items-center">
                     <p className="font-bold text-md md:text-lg lg:text-xl px-1">
@@ -136,7 +137,7 @@ function Explore() {
           </div>
         </div>
 
-        <div className="section_3 bg-gray-100">
+        <div className="section_3 bg-gray-900 text-white">
           <div className="container p-5 md:p-5 lg:p-10">
             <h1 className="px-0 md:px-0 lg:px-5 py-0 md:py-0 lg:py-3 text-xl md:text-xl lg:text-2xl font-bold">
               Recommanded Collections
@@ -149,22 +150,22 @@ function Explore() {
         </div>
 
         <div className="section_4">
-          <div className="container p-10">
-            <div className="flex md:flex-col lg:flex-row items-center justify-between">
+          <div className="container p-5 md:p-5 lg:p-10">
+            <div className="flex-row md:flex-col lg:flex-row items-center justify-between">
               <div>
-                <h1 className="px-2 md:px-2 lg:px-5 py-2 md:py-2 lg:py-3 text-xl md:text-xl lg:text-2xl font-bold">
+                <h1 className="px-2 md:px-2 lg:px-5 py-2 md:py-2 lg:py-3 text-lg md:text-lg lg:text-2xl font-bold">
                   Active Mints
                 </h1>
               </div>
               <div className="flex">
-                <div>
-                  <AppBtn label="Explore more" />
+                <div className="">
+                  <AppBtn label="Explore more"/>
                 </div>
                 <div className="flex items-center justify-center">
-                  <div className="border-2 border-gray-300 p-3 rounded-full text-lg text-gray-700 mx-1">
+                  <div className="border border-gray-300 p-3 rounded-full text-sm md:text-sm lg:text-lg mx-1">
                     <FaArrowLeft />
                   </div>
-                  <div className="border-2 border-gray-300 p-3 rounded-full text-lg text-gray-700 mx-1">
+                  <div className="border-2 border-gray-300 p-3 rounded-full text-sm md:text-sm lg:text-lg  mx-1">
                     <FaArrowRight />
                   </div>
                 </div>
@@ -200,15 +201,15 @@ function Explore() {
               ].map((item, index) => (
                 <div
                   key={index}
-                  className="border-2 border-gray-500 rounded-2xl p-3"
+                  className="border-2 border-gray-500 rounded-2xl  p-3"
                 >
                   <div className="px-3 my-3">
                     <AppBtn label="Live Now" />
                   </div>
-                  <div className="px-3">
+                  <div className="flex justify-center">
                     <img src={item.img} alt={item.title} className=""/>
                   </div>
-                  <div className="px-3 py-1">
+                  <div className="p-3">
                     <h1 className="font-bold text-lg">{item.title}</h1>
                     <p className="text-sm">
                       Price <span className="font-bold">{item.price}</span>
@@ -229,7 +230,7 @@ function Explore() {
           <h1 className="px-0 md:px-0 lg:px-5 py-0 md:py-0 lg:py-3 text-xl md:text-xl lg:text-2xl font-bold text-center">
               Browse All NFT Collections
             </h1>
-            <hr />
+            <hr className="my-5"/>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 my-2">
               {[
                 {
@@ -264,8 +265,8 @@ function Explore() {
                   key={index}
                   className="border border-gray-500 rounded-2xl"
                 >
-                  <div className="">
-                    <img src={item.img} alt={item.title} className=""/>
+                  <div className="w-[100%]">
+                    <img src={item.img} alt={item.title}/>
                   </div>
                   <div className="px-3 py-3">
                     <h1 className="font-bold text-lg text-center">{item.title}</h1>
@@ -285,6 +286,18 @@ function Explore() {
             </div>
             <div className="flex justify-center items-center my-5">
               <AppBtn label="Load More"/>
+            </div>
+          </div>
+        </div>
+
+        <div className="section_6 bg-gray-900 text-white">
+          <div className="container p-10">
+          <h1 className="px-0 md:px-0 lg:px-5 py-0 md:py-0 lg:py-3 text-xl md:text-xl lg:text-2xl font-bold text-center text-white">
+              Our Services
+            </h1>
+
+            <div className="">
+              <AppServiceCarousel />
             </div>
           </div>
         </div>
