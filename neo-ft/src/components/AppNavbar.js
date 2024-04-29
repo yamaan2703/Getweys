@@ -145,7 +145,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`py-6 px-2 fixed top-0 w-full z-10 transition-all shadow-xl bg-white ${
+      className={`py-3 px-2 fixed top-0 w-full z-10 transition-all shadow-xl bg-white ${
         isScrolled ? "isScrolled" : ""
       } ${isDarkMode ? "dark" : ""}`}
     >
