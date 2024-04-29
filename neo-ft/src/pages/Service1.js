@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import help1 from "../images/help1.png";
 import help2 from "../images/help2.png";
 import help3 from "../images/help3.png";
 import help4 from "../images/help4.png";
-import help5 from "../images/hep5.png"; // Fixed typo in image import
+import help5 from "../images/hep5.png"; 
 import help6 from "../images/help6.png";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 
 function Service1() {
+  useEffect(() => {
+    AOS.init();
+    AOS.refresh(); 
+  }, []);
   const slidesData = [
     {
       id: 1,
@@ -48,6 +55,8 @@ function Service1() {
   ];
 
   return (
+    // Solutions for All
+    <>
     <div className="service_section mt-26">
       <div className="section_1">
         <div className="overlay flex justify-center items-center">
@@ -61,10 +70,10 @@ function Service1() {
 
       <div className="section_2">
         <div className="container p-10 text-center">
-          <h1 className="text-3xl font-bold mb-10">Solutions for All</h1>
+          <h1 className="text-3xl md:text-xl lg:text-3xl font-bold mb-10" data-aos="zoom-in" data-aos-duration="3000">Solutions for All</h1>
           <hr className="my-5" />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4" data-aos="zoom-in" data-aos-duration="2000">
             {slidesData.map((slide) => (
               <div key={slide.id} className="shadow-lg shadow-gray-500 rounded-xl">
                 <div className="p-5">
@@ -88,6 +97,7 @@ function Service1() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
