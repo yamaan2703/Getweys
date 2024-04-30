@@ -5,7 +5,7 @@ function AppInp(props) {
     return (
         <div className="relative">
             <input 
-                className="bg-[#EBF0F0] py-2 px-12 rounded-full" 
+                className="bg-[#EBF0F0] p-2 px-10 rounded-full" 
                 placeholder={label}
                 value={value}
                 onChange={onChange}

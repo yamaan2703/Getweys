@@ -13,6 +13,8 @@ import Service5 from "../pages/Service5";
 import Service6 from "../pages/Service6";
 import Service7 from "../pages/Service7";
 import LaunchpadDetails from "../pages/LaunchpadDetails";
+import Profile from "../pages/Profile";
+import AccounrDetails from "../pages/AccounrDetails";
 
 export default function AppRouter () {
     return (
@@ -29,10 +31,12 @@ export default function AppRouter () {
             <Route path="/service5" element={<Service5 />}/>
             <Route path="/service6" element={<Service6 />}/>
             <Route path="/service7" element={<Service7 />}/>
+            <Route path="/profile" element={<Profile />}/>
+            <Route path="/accounrdetails" element={<AccounrDetails />}/>
             <Route path="/launchpad" element={<Launchpad />}/>
             <Route path="/launchpaddetails" element={<LaunchpadDetails />}/>
         </Routes>
-        {/* <AppFooter /> */}
+        <AppFooter />
         </BrowserRouter>
         </>
     )

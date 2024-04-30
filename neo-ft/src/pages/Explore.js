@@ -75,9 +75,9 @@ function Explore() {
   return (
     <>
       {/* Explore Section Start */}
-      <div className="explore_section mt-26">
+      <div className="explore_section mt-20">
         <div class="section_1">
-          <div class="container p-12 mt-20">
+          <div class="container p-12 ">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div  data-aos="zoom-in" data-aos-duration="3000">
               <div class="flex items-center justify-center">
