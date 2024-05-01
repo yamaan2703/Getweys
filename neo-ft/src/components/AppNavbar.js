@@ -139,7 +139,7 @@ const Navbar = () => {
           <AppBtn label="Connect Wallet"/>
          </div>
 
-        <div className="text-xl text-[#7A52F4]" onClick={() => navigate("/profile")}>
+        <div className="text-xl text-[#7A52F4]" onClick={() => navigate("/ownprofile")}>
           <FaUser />
         </div>
         </div>

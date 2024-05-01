@@ -15,6 +15,10 @@ import Service7 from "../pages/Service7";
 import LaunchpadDetails from "../pages/LaunchpadDetails";
 import Profile from "../pages/Profile";
 import AccounrDetails from "../pages/AccounrDetails";
+import Notification from "../pages/Notification";
+import OwProfile from "../pages/OwProfile";
+import Collections from "../pages/Collections";
+import SingleProfile from "../pages/SingleProfile";
 
 export default function AppRouter () {
     return (
@@ -33,10 +37,14 @@ export default function AppRouter () {
             <Route path="/service7" element={<Service7 />}/>
             <Route path="/profile" element={<Profile />}/>
             <Route path="/accounrdetails" element={<AccounrDetails />}/>
+            <Route path="/notification" element={<Notification />}/>
+            <Route path="/ownprofile" element={<OwProfile />}/>
             <Route path="/launchpad" element={<Launchpad />}/>
             <Route path="/launchpaddetails" element={<LaunchpadDetails />}/>
+            <Route path="/collections" element={<Collections />}/>
+            <Route path="/singleprofile" element={<SingleProfile />}/>
         </Routes>
-        <AppFooter />
+        {/* <AppFooter /> */}
         </BrowserRouter>
         </>
     )
