@@ -9,7 +9,7 @@ import { FaUser } from "react-icons/fa";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false); // State for dark mode
+  const [isDarkMode, setIsDarkMode] = useState(false); 
   const location = useLocation();
   const navigate =  useNavigate()
 
@@ -40,6 +40,8 @@ const Navbar = () => {
   useEffect(() => {
     document.body.style.backgroundColor = isDarkMode ? "black" : "white";
     document.body.style.color = isDarkMode ? "white" : "black";
+    document.body.style.backgroundImage = isDarkMode ? "url('../images/background.png')" : "none";
+
   }, [isDarkMode]);
 
   const toggleDarkMode = () => {
