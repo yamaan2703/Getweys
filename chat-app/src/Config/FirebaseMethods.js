@@ -32,37 +32,38 @@ let db = getDatabase(app)
 //     })
 // }
 
-export let AppSignUp = (model, imageFile) => { 
+
+export let AppSignUp = (model, imageFile) => {
     return new Promise((resolve, reject) => {
-        if (!model.email || !model.password) {
-            reject("Email and Password are required");
-        } else {
-            createUserWithEmailAndPassword(auth, model.email, model.password)
-                .then((res) => {
-                    uploadFile(imageFile) 
-                        .then((imgURL) => {
-                            let id = res.user.uid;
-                            model.id = id;
-                            model.avatar = imgURL; 
-                            const reference = ref(db, `users/${id}`);
-                            set(reference, model)
-                                .then(() => {
-                                    resolve("User Created Successfully");
-                                })
-                                .catch((error) => {
-                                    reject(error);
-                                });
-                        })
-                        .catch((error) => {
-                            reject("Error uploading image: " + error);
-                        });
-                })
-                .catch((error) => {
+      if (!model.email || !model.password) {
+        reject("Email and Password are required");
+      } else {
+        createUserWithEmailAndPassword(auth, model.email, model.password)
+          .then((res) => {
+            uploadFile(imageFile)
+              .then((imgURL) => {
+                let id = res.user.uid;
+                model.id = id;
+                model.avatar = imgURL;
+                const reference = ref(db, `users/${id}`);
+                set(reference, model)
+                  .then(() => {
+                    resolve("User Created Successfully");
+                  })
+                  .catch((error) => {
                     reject(error);
-                });
-        }
+                  });
+              })
+              .catch((error) => {
+                reject("Error uploading image: " + error);
+              });
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      }
     });
-};
+  };
 
 
 export let AppLogin = (body) => {
@@ -110,31 +111,36 @@ export let AppAuth=()=>{
  }
 
 
- export let AppAdd=(nodeName,body,id)=>{
-     return new Promise((resolve,reject)=>{
-         const TaskId = push(ref(db,`${nodeName}/`)).key        
-         body.id = TaskId
-         const referece = ref(db,`${nodeName}/${body.id}`)
-         set(referece,body).then(res=>{
-             resolve("Data Send Successfully")
-         }).catch(err=>{
-             reject(err)        
-         })
-     })
- }  
+//  export let AppAdd=(nodeName,body,id)=>{
+//      return new Promise((resolve,reject)=>{
+         
+//          const TaskId = push(ref(db,`${nodeName}/`)).key        
+ 
+//          body.id = TaskId
+ 
+ 
+//          const referece = ref(db,`${nodeName}/${body.id}`)
+         
+//          set(referece,body).then(res=>{
+//              resolve("Data Send Successfully")
+//          }).catch(err=>{
+//              reject(err)        
+//          })
+//      })
+//  }  
 
- export let AppGet=(nodeName,id)=>{
-     return new Promise((resolve,reject)=>{
-         const referece = ref(db,`${nodeName}/${id?id:""}`)
-         onValue(referece,(data)=>{
-             if(data.exists()){
-                 resolve(data.val())
-             }else{
-                 reject("No Data Found :(")
-             }
-         })
-     })
- }
+//  export let AppGet=(nodeName,id)=>{
+//      return new Promise((resolve,reject)=>{
+//          const referece = ref(db,`${nodeName}/${id?id:""}`)
+//          onValue(referece,(data)=>{
+//              if(data.exists()){
+//                  resolve(Object.values(data.val()))
+//              }else{
+//                  reject("No Data Found :(")
+//              }
+//          })
+//      })
+//  }
 
 
 //  export let fbDelete=()=>{}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AppInp from "../Components/AppInp";
 import AppBtn from "../Components/AppBtn";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, json, useNavigate } from "react-router-dom";
 import { AppLogin } from "../Config/FirebaseMethods";
 
 function Login() {
@@ -16,8 +16,12 @@ function Login() {
 
   let LoginUSer = () => {
     AppLogin(model)
-      .then(() => {
-        navigate("/home");
+      .then((res) => {
+        console.log(res)
+        let userData  = {...res};
+        delete userData.password
+        localStorage.setItem("LoginUser" , JSON.stringify({...userData}))
+        navigate("/home"); //home kaha ha
       })
       .catch((err) => {
         console.log(err);

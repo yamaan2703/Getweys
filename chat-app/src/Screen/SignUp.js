@@ -6,7 +6,7 @@ import { AppSignUp } from "../Config/FirebaseMethods";
 
 export default function SignUp() {
   const [model, setModel] = useState({});
-  const [image, setImage] = useState(null); 
+  const [image, setImage] = useState(null);
 
   const fillModel = (key, val) => {
     setModel((prevModel) => ({
@@ -38,9 +38,9 @@ export default function SignUp() {
     <>
       <div className="background_page h-screen">
         <div className="overlay h-screen flex justify-center items-center">
-          <div className="w-[500px] bg-[rgba(0,0,0,0.5)] py-5 px-12 rounded-lg">
+          <div className="w-[500px] bg-[rgba(0,0,0,0.8)] py-5 px-12 rounded-lg">
             <div>
-              <h1 className="text-center text-white text-4xl font-extrabold font-mono p-3 shadow-lg shadow-blue-500 my-5">
+              <h1 className="text-center text-white text-4xl font-extrabold font-mono p-3 shadow-lg shadow-gray-300 my-5">
                 SignUp
               </h1>
             </div>
@@ -57,16 +57,17 @@ export default function SignUp() {
                   src={
                     image
                       ? URL.createObjectURL(image)
-                      : "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                      : "https://static.vecteezy.com/system/resources/previews/036/280/650/original/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector.jpg"
                   }
                   className="w-[100px] h-[100px] object-cover rounded-full"
                   alt="User"
                 />
+                <div className="text-center text-white">
+                  <p className="">Upload Image</p>
+                </div>
               </label>
             </div>
-            <div className="text-center text-white">
-              <p>Upload Image</p>
-            </div>
+
             <div className="my-3">
               <AppInp
                 value={model.userName}
