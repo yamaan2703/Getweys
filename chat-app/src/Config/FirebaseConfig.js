@@ -1,26 +1,29 @@
 // Import the functions you need from the SDKs you need
+
+import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getStorage } from "firebase/storage";
-import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAohWc5oDuXGR4Lfa9hP_r_f3NIloLV1ZU",
-  authDomain: "react-chat-app-eba82.firebaseapp.com",
-  databaseURL: "https://react-chat-app-eba82-default-rtdb.firebaseio.com",
-  projectId: "react-chat-app-eba82",
-  storageBucket: "react-chat-app-eba82.appspot.com",
-  messagingSenderId: "217347611869",
-  appId: "1:217347611869:web:851df3739fd35a772c4f34",
-  measurementId: "G-N9X5PJM4MG"
+  apiKey: "AIzaSyD2Op3yrG3D-XOpYXmJkAjH2RnM1Ka8uNs",
+  authDomain: "chat-2ca36.firebaseapp.com",
+  projectId: "chat-2ca36",
+  storageBucket: "chat-2ca36.appspot.com",
+  messagingSenderId: "920790862847",
+  appId: "1:920790862847:web:bb3ef28ec322ca65bc75ca",
+  measurementId: "G-S3MK8HXNWJ"
 };
 
 // Initialize Firebase
-export const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+export const auth = getAuth(app);
 export const storage = getStorage();
-export const auth = getAuth()
+export const db = getFirestore(app);
+
