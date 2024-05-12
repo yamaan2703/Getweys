@@ -5,11 +5,90 @@ import { IoIosCall } from "react-icons/io";
 import { MdOutlineInsertPhoto } from "react-icons/md";
 import AppInp from "./AppInp";
 import { ChatContext } from "../Config/ChatContext";
+import {
+  Timestamp,
+  arrayUnion,
+  doc,
+  onSnapshot,
+  updateDoc,
+} from "firebase/firestore";
+import { db, storage } from "../Config/FirebaseConfig";
+import { AuthContext } from "../Config/AuthContext";
+import { v4 as uuid } from "uuid";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 function Chat() {
-   const { data } = useContext(ChatContext) 
+  const { data } = useContext(ChatContext);
+  const { currentUser } = useContext(AuthContext);
+  const [messages, setMessages] = useState([]);
+  const [text, setText] = useState("");
+  const [img, setImg] = useState(null);
+  const [showFileInput, setShowFileInput] = useState(false);
 
- 
+  useEffect(() => {
+    const unSub = onSnapshot(doc(db, "chats", data.chatId), (doc) => {
+      doc.exists() && setMessages(doc.data().messages);
+    });
+    return () => {
+      unSub();
+    };
+  }, [data.chatId]);
+
+  const handleIconClick = () => {
+    setShowFileInput(true);
+  };
+
+  const handleSend = async () => {
+    try {
+      if (text.trim() === "" && !img) return; // Don't send empty messages
+
+      if (img) {
+        const storageRef = ref(storage, uuid());
+        const uploadTask = uploadBytesResumable(storageRef, img);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+          },
+          (error) => {
+            console.error(error);
+          },
+          async () => {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            await updateDoc(doc(db, "chats", data.chatId), {
+              messages: arrayUnion({
+                id: uuid(),
+                text,
+                senderId: currentUser.uid,
+                date: Timestamp.now(),
+                img: downloadURL,
+              }),
+            });
+            // Clear input fields after sending message
+            setText("");
+            setImg(null);
+          }
+        );
+      } else {
+        await updateDoc(doc(db, "chats", data.chatId), {
+          messages: arrayUnion({
+            id: uuid(),
+            text,
+            senderId: currentUser.uid,
+            date: Timestamp.now(),
+          }),
+        });
+        // Clear input fields after sending message
+        setText("");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     // ChatBox
     <div className="chat_box p-5 relative w-[900px]">
@@ -24,37 +103,42 @@ function Chat() {
             />
           </div>
           <div className="text-white">
-            <h1 className="font-bold text-lg font-mono">{data.user?.displayName || null}</h1>
+            <h1 className="font-bold text-lg font-mono">
+              {data.user?.displayName || "Guest"}
+            </h1>
           </div>
         </div>
-
-        {/* <div>
-          <AppBtn label="Block User" />
-        </div> */}
       </div>
       <hr className="my-2" />
 
       {/* User Chats */}
       <div className="message_body p-2 overflow-y-auto h-[420px] relative">
-
-        <div className="flex space-x-2 justify-end items-center text-white my-2">
-          <div className="p-1 bg-[rgba(0,0,0,0.6)] rounded">
-            <p>Lorem Ipsum is simply dummy text</p>
-            <span className="text-gray-400 text-xs">1 min ago</span>
+        {messages.map((message) => (
+          <div
+            key={message.id}
+            className={`flex space-x-2 items-center my-2 ${
+              message.senderId === currentUser.uid ? "justify-end" : "justify-start"
+            }`}
+          >
+            <div className="p-1 bg-[rgba(0,0,0,0.6)] rounded text-white">
+              {message.text && <p>{message.text}</p>}
+              {message.img && (
+                <img
+                  src={message.img}
+                  className="rounded w-[200px] h-[200px] object-cover"
+                  alt="Sent image"
+                />
+              )}
+              <span className="text-gray-400 text-xs">
+                {message.date.toDate().toLocaleString()}
+              </span>
+            </div>
           </div>
-          <div className="">
-          <img
-              src="https://images.unsplash.com/photo-1504593811423-6dd665756598?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              className="object-cover rounded-full w-[30px] h-[30px]"
-              alt="User"
-            />
-          </div>
-        </div>
-
+        ))}
       </div>
 
       {/* Message Box */}
-      <div className="user_chats absolute bottom-1 w-[850px]">
+      <div className="user_chats absolute bottom-0 w-[850px]">
         <div className="flex justify-center items-center p-1 pt-2 space-x-4 border-t">
           <div className="icons flex justify-between items-center space-x-4">
             <div className="text-white font-bold text-xl">
@@ -64,20 +148,28 @@ function Chat() {
               <FaVideo />
             </div>
             <div className="text-white font-bold text-xl">
-              <MdOutlineInsertPhoto />
+              <label htmlFor="file-input" onClick={handleIconClick}>
+                <MdOutlineInsertPhoto />
+              </label>
+              {showFileInput && (
+                <input
+                  type="file"
+                  id="file-input"
+                  style={{ display: "none" }}
+                  onChange={(e) => setImg(e.target.files[0])}
+                />
+              )}
             </div>
           </div>
           <div className="w-full">
-            <AppInp 
-            label="Type a message..." 
-            // value={model.messages}
-            //     onChange={(e) => fillModel("messages", e.target.value)}
+            <AppInp
+              label="Type a message..."
+              value={text}
+              onChange={(e) => setText(e.target.value)}
             />
           </div>
           <div>
-            <AppBtn label="Send" 
-            // onClick={sendMessage}
-            />
+            <AppBtn label="Send" onClick={handleSend} />
           </div>
         </div>
       </div>
@@ -86,8 +178,3 @@ function Chat() {
 }
 
 export default Chat;
-
-
-
-
-
