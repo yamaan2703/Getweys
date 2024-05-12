@@ -8,8 +8,12 @@ function Home() {
     <div className='background_page'>
       <div className='bg-[rgba(0,0,0,0.8)] h-screen'>
         <div className='container flex'>
+          <div className=''>
           <Slidebar />
+          </div>
+          <div>
           <Chat />
+          </div>
         </div>
       </div>
     </div>
