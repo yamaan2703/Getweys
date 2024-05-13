@@ -228,18 +228,21 @@ function Chat() {
                   className="rounded w-[200px] h-[200px] object-cover"
                 />
               )}
+              <div className="flex flex-col">
               {message.document && (
                 <a
                   href={message.document}
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="font-bold border-b"
                 >
-                  Download Document
+                  Download Document.....
                 </a>
               )}
               <span className="text-gray-400 text-xs">
                 {message.date.toDate().toLocaleString()}
               </span>
+              </div>
             </div>
           </div>
         ))}
