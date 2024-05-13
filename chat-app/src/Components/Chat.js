@@ -23,6 +23,9 @@ function Chat() {
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
+  const [video, setVideo] = useState(null);
+  const [isRecording, setIsRecording] = useState(false);
+  const [documentFile, setDocumentFile] = useState(null);
   const [showFileInput, setShowFileInput] = useState(false);
   const [firstUserLoggedIn, setFirstUserLoggedIn] = useState(false);
 
@@ -47,59 +50,140 @@ function Chat() {
 
   const handleSend = async () => {
     try {
-      if (text.trim() === "" && !img) return; // Don't send empty messages
+      if (text.trim() === "" && !img && !video && !documentFile) return;
 
-      if (img) {
-        const storageRef = ref(storage, uuid());
-        const uploadTask = uploadBytesResumable(storageRef, img);
-
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            const progress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log("Upload is " + progress + "% done");
-          },
-          (error) => {
-            console.error(error);
-          },
-          async () => {
-            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-            await updateDoc(doc(db, "chats", data.chatId), {
-              messages: arrayUnion({
-                id: uuid(),
-                text,
-                senderId: currentUser.uid,
-                date: Timestamp.now(),
-                img: downloadURL,
-              }),
-            });
-            // Clear input fields after sending message
-            setText("");
-            setImg(null);
-          }
-        );
-      } else {
-        await updateDoc(doc(db, "chats", data.chatId), {
-          messages: arrayUnion({
-            id: uuid(),
-            text,
-            senderId: currentUser.uid,
-            date: Timestamp.now(),
-          }),
-        });
-        // Clear input fields after sending message
-        setText("");
+      switch (true) {
+        case !!img:
+          const imgStorageRef = ref(storage, uuid());
+          const imgUploadTask = uploadBytesResumable(imgStorageRef, img);
+          imgUploadTask.on(
+            "state_changed",
+            (snapshot) => {
+              const progress =
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              console.log("Upload is " + progress + "% done");
+            },
+            (error) => {
+              console.error(error);
+            },
+            async () => {
+              const imgDownloadURL = await getDownloadURL(
+                imgUploadTask.snapshot.ref
+              );
+              await updateDoc(doc(db, "chats", data.chatId), {
+                messages: arrayUnion({
+                  id: uuid(),
+                  text,
+                  senderId: currentUser.uid,
+                  date: Timestamp.now(),
+                  img: imgDownloadURL,
+                }),
+              });
+              setText("");
+              setImg(null);
+            }
+          );
+          break;
+        case !!video:
+          const videoStorageRef = ref(storage, uuid());
+          const videoUploadTask = uploadBytesResumable(videoStorageRef, video);
+          videoUploadTask.on(
+            "state_changed",
+            (snapshot) => {
+              const progress =
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              console.log("Upload is " + progress + "% done");
+            },
+            (error) => {
+              console.error(error);
+            },
+            async () => {
+              const videoDownloadURL = await getDownloadURL(
+                videoUploadTask.snapshot.ref
+              );
+              await updateDoc(doc(db, "chats", data.chatId), {
+                messages: arrayUnion({
+                  id: uuid(),
+                  text,
+                  senderId: currentUser.uid,
+                  date: Timestamp.now(),
+                  video: videoDownloadURL,
+                }),
+              });
+              setText("");
+              setVideo(null);
+            }
+          );
+          break;
+        case !!documentFile:
+          const docStorageRef = ref(storage, uuid());
+          const docUploadTask = uploadBytesResumable(
+            docStorageRef,
+            documentFile
+          );
+          docUploadTask.on(
+            "state_changed",
+            (snapshot) => {
+              const progress =
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              console.log("Upload is " + progress + "% done");
+            },
+            (error) => {
+              console.error(error);
+            },
+            async () => {
+              const docDownloadURL = await getDownloadURL(
+                docUploadTask.snapshot.ref
+              );
+              await updateDoc(doc(db, "chats", data.chatId), {
+                messages: arrayUnion({
+                  id: uuid(),
+                  text,
+                  senderId: currentUser.uid,
+                  date: Timestamp.now(),
+                  document: docDownloadURL,
+                }),
+              });
+              setText("");
+              setDocumentFile(null);
+            }
+          );
+          break;
+        default:
+          await updateDoc(doc(db, "chats", data.chatId), {
+            messages: arrayUnion({
+              id: uuid(),
+              text,
+              senderId: currentUser.uid,
+              date: Timestamp.now(),
+            }),
+          });
+          setText("");
       }
     } catch (error) {
       console.error(error);
     }
   };
 
+  const startRecording = () => {
+    setIsRecording(true);
+  };
+
+  const stopRecording = () => {
+    setIsRecording(false);
+  };
+
+  const onData = (recordedBlob) => {
+    console.log('chunk of real-time data is: ', recordedBlob);
+  };
+
+  const onStop = (recordedBlob) => {
+    console.log('recordedBlob is: ', recordedBlob);
+  };
+
+
   return (
-    // ChatBox
     <div className="chat_box p-5 relative w-[900px]">
-      {/* User Info */}
       <div className="flex justify-between ">
         <div className="chat_info flex justify-between items-center space-x-4">
           <div>
@@ -118,23 +202,40 @@ function Chat() {
       </div>
       <hr className="my-2" />
 
-      {/* User Chats */}
       <div className="message_body p-2 overflow-y-auto h-[420px] relative">
         {messages.map((message) => (
           <div
             key={message.id}
             className={`flex space-x-2 items-center my-2 ${
-              message.senderId === currentUser.uid ? "justify-end" : "justify-start"
+              message.senderId === currentUser.uid
+                ? "justify-end"
+                : "justify-start"
             }`}
           >
             <div className="p-1 bg-[rgba(0,0,0,0.6)] rounded text-white">
-              {message.text && <p>{message.text}</p>}
+              {message.text && <p className="w-auto">{message.text}</p>}
               {message.img && (
                 <img
                   src={message.img}
                   className="rounded w-[200px] h-[200px] object-cover"
                   alt="Sent image"
                 />
+              )}
+              {message.video && (
+                <video
+                  src={message.video}
+                  controls
+                  className="rounded w-[200px] h-[200px] object-cover"
+                />
+              )}
+              {message.document && (
+                <a
+                  href={message.document}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Download Document
+                </a>
               )}
               <span className="text-gray-400 text-xs">
                 {message.date.toDate().toLocaleString()}
@@ -144,7 +245,6 @@ function Chat() {
         ))}
       </div>
 
-      {/* Message Box */}
       <div className="user_chats absolute bottom-0 w-[850px]">
         <div className="flex justify-center items-center p-1 pt-2 space-x-4 border-t">
           <div className="icons flex justify-between items-center space-x-4">
@@ -163,7 +263,13 @@ function Chat() {
                   type="file"
                   id="file-input"
                   style={{ display: "none" }}
-                  onChange={(e) => setImg(e.target.files[0])}
+                  onChange={(e) => {
+                    if (e.target.files[0].type.startsWith("video/")) {
+                      setVideo(e.target.files[0]);
+                    } else {
+                      setDocumentFile(e.target.files[0]);
+                    }
+                  }}
                 />
               )}
             </div>
@@ -185,4 +291,3 @@ function Chat() {
 }
 
 export default Chat;
-

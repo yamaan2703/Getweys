@@ -3,10 +3,12 @@ import AppBtn from "./AppBtn";
 import { signOut } from "firebase/auth";
 import { auth } from "../Config/FirebaseConfig";
 import { AuthContext } from "../Config/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
 
   const {currentUser} = useContext(AuthContext)  
+  const navigate = useNavigate()
 
   return (
     <div className="navbar p-3">
@@ -32,6 +34,12 @@ function Navbar() {
             onClick={() => signOut(auth)}
             />
           </div>
+        </div>
+        <div className="mt-1">
+          <AppBtn 
+          label="Update Profile"
+          onClick={() => navigate("/updateprofile")}
+          />
         </div>
       </div>
     </div>

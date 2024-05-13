@@ -4,6 +4,8 @@ import SignUp from "../Screens/SignUp";
 import Home from "../Screens/Home";
 import { useContext } from "react";
 import { AuthContext } from "./AuthContext";
+import UpdateProfile from "../Screens/UpdateProfile";
+import SetProfile from "../Screens/UpdateProfile";
 
 export default function AppRouter() {
     const { currentUser } = useContext(AuthContext);
@@ -21,6 +23,7 @@ export default function AppRouter() {
                 <Routes>
                     <Route path="/" element={<Login />} />
                     <Route path="/signup" element={<SignUp />} />
+                    <Route path="/updateprofile" element={<SetProfile />} />
                     <Route
                         path="/home"
                         element={
