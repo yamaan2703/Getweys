@@ -24,7 +24,6 @@ function Chat() {
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
   const [video, setVideo] = useState(null);
-  const [isRecording, setIsRecording] = useState(false);
   const [documentFile, setDocumentFile] = useState(null);
   const [showFileInput, setShowFileInput] = useState(false);
   const [firstUserLoggedIn, setFirstUserLoggedIn] = useState(false);
@@ -165,23 +164,6 @@ function Chat() {
     }
   };
 
-  const startRecording = () => {
-    setIsRecording(true);
-  };
-
-  const stopRecording = () => {
-    setIsRecording(false);
-  };
-
-  const onData = (recordedBlob) => {
-    console.log('chunk of real-time data is: ', recordedBlob);
-  };
-
-  const onStop = (recordedBlob) => {
-    console.log('recordedBlob is: ', recordedBlob);
-  };
-
-
   return (
     <div className="chat_box p-5 relative w-[900px]">
       <div className="flex justify-between ">
@@ -229,19 +211,19 @@ function Chat() {
                 />
               )}
               <div className="flex flex-col">
-              {message.document && (
-                <a
-                  href={message.document}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-bold border-b"
-                >
-                  Download Document.....
-                </a>
-              )}
-              <span className="text-gray-400 text-xs">
-                {message.date.toDate().toLocaleString()}
-              </span>
+                {message.document && (
+                  <a
+                    href={message.document}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-bold border-b"
+                  >
+                    Download Document.....
+                  </a>
+                )}
+                <span className="text-gray-400 text-xs">
+                  {message.date.toDate().toLocaleString()}
+                </span>
               </div>
             </div>
           </div>
