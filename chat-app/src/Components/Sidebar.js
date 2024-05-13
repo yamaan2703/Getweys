@@ -10,7 +10,7 @@ function Sidebar() {
   return (
     // SideBar
     <>
-      <div className="sidebar bg-[rgba(0,0,0,0.5)] h-screen w-[250px]">
+      <div className="sidebar bg-[rgba(0,0,0,0.4)] h-screen w-[250px]">
         <div>
           <Navbar />
         </div>

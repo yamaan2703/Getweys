@@ -27,7 +27,7 @@ function Login() {
     <>
       <div className="background_page h-screen ">
         <div className="overlay h-screen flex justify-center items-center">
-          <div className="w-[500px] bg-[rgba(0,0,0,0.9)] p-10 rounded-lg">
+          <div className="w-[400px] bg-[rgba(0,0,0,0.9)] p-10 rounded-lg">
           <form onSubmit={handleSubmit}>
             <div>
               <h1 className="text-center text-white text-4xl font-extrabold font-mono p-3 shadow-lg shadow-gray-500 my-5">
@@ -51,7 +51,7 @@ function Login() {
             </div>
             <div className="py-5 flex text-white">
             <p className="text-gray-300 text-lg">Create Your Account.</p>
-            <Link to="/signUp" className="font-bold px-2 text-lg text-white hover:text-blue-500">SignUp</Link>
+            <Link to="/signUp" className="font-bold px-2 text-lg text-white hover:text-gray-500">SignUp</Link>
           </div>
           </form>
           </div>
