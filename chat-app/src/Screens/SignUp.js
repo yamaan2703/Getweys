@@ -106,7 +106,7 @@ export default function SignUp() {
                 </label>
               </div>
               <div className="text-center text-white">
-                  <p className="text-white text-center">Upload Image</p>
+                <p className="text-white text-center">Upload Image</p>
               </div>
               <div className="my-2">
                 <AppInp label="Enter Your Name" />

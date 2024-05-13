@@ -16,7 +16,6 @@ function Sidebar() {
         </div>
         <div>
         <Search />
-        {/* <AddUser /> */}
         </div>
         <div>
           <ChatList />
