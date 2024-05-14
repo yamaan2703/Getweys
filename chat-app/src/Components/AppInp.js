@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaSearch } from 'react-icons/fa'; // Import the search icon from react-icons/fa
+
 
 function AppInp(props) {
     const { label, onChange, type, value, icon: Icon } = props;

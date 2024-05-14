@@ -31,7 +31,7 @@ function Search() {
 
   const handleSearch = () => {
     handleSearchUser();
-    setUserName(''); // Clearing the input field after search
+    setUserName(''); 
   };
 
   const handleSelect = async () => {
@@ -64,7 +64,7 @@ function Search() {
       }
     } catch (error) {
       setUser(null);
-      setUserName(""); // Clearing the input field if an error occurs
+      setUserName(""); 
     }
   };
 

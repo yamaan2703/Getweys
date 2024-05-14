@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import AppBtn from "./AppBtn";
-import { FaVideo } from "react-icons/fa6";
-import { IoIosCall } from "react-icons/io";
 import { MdOutlineInsertPhoto } from "react-icons/md";
 import AppInp from "./AppInp";
 import { ChatContext } from "../Config/ChatContext";
@@ -235,7 +233,6 @@ function Chat() {
 
   return (
     <div className="chat_box relative w-[1030px]">
-
       <div className="flex items-center space-x-4 py-2 px-5 bg-[rgba(0,0,0,0.5)]">
         <div>
           <img
@@ -261,13 +258,17 @@ function Chat() {
                 : "justify-start"
             }`}
           >
-            <div className="p-2 bg-[rgba(0,0,0,0.6)] rounded text-white">
-              {message.text && <p className="w-auto">{message.text}</p>}
+            <div className="flex flex-col">
+              {message.text && (
+                <p className="w-auto max-w-[500px] p-2 bg-[rgba(0,0,0,0.5)] rounded text-white border-b">
+                  {message.text}
+                </p>
+              )}
 
               {message.img && (
                 <img
                   src={message.img}
-                  className="rounded w-[200px] h-[200px] object-cover"
+                  className="w-[250px] h-[250px] object-cover p-1 bg-[rgba(0,0,0,0.6)] rounded border-b"
                   alt="Sent image"
                 />
               )}
@@ -275,30 +276,29 @@ function Chat() {
                 <video
                   src={message.video}
                   controls
-                  className="rounded w-[200px] h-[200px] object-cover"
+                  className="w-[250px] h-[250px] object-cover p-1 bg-[rgba(0,0,0,0.6)] rounded border-b"
                 />
               )}
               {message.audio && (
                 <audio
                   src={message.audio}
                   controls
-                  // className="rounded w-[200px] h-[200px] object-cover"
+                  className="p-2 bg-[rgba(0,0,0,0.6)] rounded text-white border-b"
                 />
               )}
-                {message.document && (
-                  <a
-                    href={message.document}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-bold border-b"
-                  >
-                    Download Document.....
-                  </a>
-                )}
-                <span className="text-gray-500 py-1 text-xs">
-                  {message.date.toDate().toLocaleString()}
-                </span>
-              
+              {message.document && (
+                <a
+                  href={message.document}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 bg-[rgba(0,0,0,0.6)] rounded text-white font-bold border-b hover:text-gray-500"
+                >
+                  Download Document.....
+                </a>
+              )}
+              <span className="text-gray-500 px-1 text-xs">
+                {message.date.toDate().toLocaleString()}
+              </span>
             </div>
           </div>
         ))}
@@ -319,7 +319,7 @@ function Chat() {
                   <button
                     onClick={startRecording}
                     type="button"
-                    className="text-white font-bold text-2xl hover:text-gray-500 p-2"
+                    className="text-white font-bold text-2xl hover:text-gray-500 p-2 focus:text-gray-500"
                   >
                     <AiFillAudio />
                   </button>
@@ -373,7 +373,6 @@ function Chat() {
           </div>
         </div>
       </div>
-
     </div>
   );
 }
