@@ -51,16 +51,22 @@ function Chat() {
   const handleIconClick = () => {
     setShowFileInput(true);
   };
-// ue handler bnaya hai iske ande rimage, video audio or documents sb handle hai ... 
-  const handleSend = async () => { 
-    console.log(data)
+
+  const handleSend = async () => {
+    console.log(data);
     try {
-      if (text.trim() === "" && !img && !video && !documentFile && !recordedBlob)
+      if (
+        text.trim() === "" &&
+        !img &&
+        !video &&
+        !documentFile &&
+        !recordedBlob
+      )
         return;
 
       switch (true) {
         case !!recordedBlob:
-          const audioStorageRef = ref(storage, uuid()); 
+          const audioStorageRef = ref(storage, uuid());
           const audioUploadTask = uploadBytesResumable(
             audioStorageRef,
             recordedBlob.blob
@@ -79,27 +85,25 @@ function Chat() {
               const audioDownloadURL = await getDownloadURL(
                 audioUploadTask.snapshot.ref
               );
-              console.log(audioDownloadURL)
-              console.log(data)
-              let UpdateReq =  await updateDoc(doc(db, "chats", data.chatId), {
+              console.log(audioDownloadURL);
+              console.log(data);
+              let UpdateReq = await updateDoc(doc(db, "chats", data.chatId), {
                 messages: arrayUnion({
                   id: uuid(),
                   senderId: currentUser.uid,
                   date: Timestamp.now(),
                   audio: audioDownloadURL,
                 }),
-              }).then((res)=>console.log(res)).catch((err)=>console
-            .log(err))
-              console.log(UpdateReq)
-              setRecord(false); 
-              setRecordedBlob(null); 
-
-                  // console.log("set record -----", setRecord);
-              // console.log("set record bolb -----", setRecordedBlob);
+              })
+                .then((res) => console.log(res))
+                .catch((err) => console.log(err));
+              console.log(UpdateReq);
+              setRecord(false);
+              setRecordedBlob(null);
             }
           );
           break;
-// ye code logic sahi hai data base me ja bhi rahi hai or aa bhi rahi hai bs show documents me ho rahi hai pheke image format me hi show ho rahi thi jb se document ka likha usme kuch out ho gya tb se ye garbar chl rahi hai .. mujhe pata hai bahi lekin mujhe code smjne to do ....ok ok 
+
         case !!img:
           const imgStorageRef = ref(storage, uuid());
           const imgUploadTask = uploadBytesResumable(imgStorageRef, img);
@@ -127,7 +131,7 @@ function Chat() {
                 }),
               });
               setText("");
-              setImg(null); 
+              setImg(null);
             }
           );
           break;
@@ -218,43 +222,36 @@ function Chat() {
 
   const stopRecording = () => {
     setRecord(false);
-    // console.log("seRecord -=-=-=-=-=-=-=-=", setRecord);
   };
-  // console.log("Stop Recording ==========", stopRecording);
 
   const onData = (recordedBlob) => {
     console.log("chunk of real-time data is: ", recordedBlob);
   };
 
-//  console.log("onData )-0-0-0-0-00-0-0-_" ,onData);
-
   const onStop = (recordedBlob) => {
     console.log("recordedBlob is: ", recordedBlob);
-    setRecordedBlob(recordedBlob); 
+    setRecordedBlob(recordedBlob);
   };
 
-  // console.log(messages)
   return (
-    <div className="chat_box p-5 relative w-[1000px]">
-      <div className="flex justify-between ">
-        <div className="chat_info flex justify-between items-center space-x-4">
-          <div>
-            <img
-              src={data.user?.photoURL || null}
-              className="w-[50px] h-[50px] object-cover rounded-full"
-              alt=""
-            />
-          </div>
-          <div className="text-white">
-            <h1 className="font-bold text-lg font-mono">
-              {firstUserLoggedIn ? data.user?.displayName : ""}
-            </h1>
-          </div>
+    <div className="chat_box relative w-[1030px]">
+
+      <div className="flex items-center space-x-4 py-2 px-5 bg-[rgba(0,0,0,0.5)]">
+        <div>
+          <img
+            src={data.user?.photoURL || null}
+            className="w-[50px] h-[50px] object-cover rounded-full"
+            alt=""
+          />
+        </div>
+        <div className="text-white">
+          <h1 className="font-bold text-2xl font-mono">
+            {firstUserLoggedIn ? data.user?.displayName : ""}
+          </h1>
         </div>
       </div>
-      <hr className="my-2" />
 
-      <div className="message_body p-2 overflow-y-auto h-[470px] relative">
+      <div className="message_body p-5 overflow-y-auto h-[460px]">
         {messages.map((message) => (
           <div
             key={message.id}
@@ -264,9 +261,9 @@ function Chat() {
                 : "justify-start"
             }`}
           >
-            <div className="p-1 bg-[rgba(0,0,0,0.6)] rounded text-white">
+            <div className="p-2 bg-[rgba(0,0,0,0.6)] rounded text-white">
               {message.text && <p className="w-auto">{message.text}</p>}
-              {/* is code pe aa hi nh raha iamge ka hai direct document pe ja raha hai  */}
+
               {message.img && (
                 <img
                   src={message.img}
@@ -288,8 +285,6 @@ function Chat() {
                   // className="rounded w-[200px] h-[200px] object-cover"
                 />
               )}
-              {/* idher ... */}
-              <div className="flex flex-col">
                 {message.document && (
                   <a
                     href={message.document}
@@ -300,74 +295,85 @@ function Chat() {
                     Download Document.....
                   </a>
                 )}
-                <span className="text-gray-400 text-xs">
+                <span className="text-gray-500 py-1 text-xs">
                   {message.date.toDate().toLocaleString()}
                 </span>
-              </div>
+              
             </div>
           </div>
         ))}
       </div>
 
-      <div className="user_chats absolute bottom-0 w-[1000px]">
-        <div className="flex justify-center items-center p-1 pt-2 space-x-4 border-t">
-          <div className="icons flex justify-between items-center space-x-4">
-            <div className="text-white font-bold text-xl">
-              {/* <IoIosCall /> */}
-              <div>
-                <ReactMic
-                  record={record}
-                  className="sound-wave w-[100px]"
-                  onStop={onStop}
-                  onData={onData}
-                />
-                <button onClick={startRecording} type="button" className="text-2xl px-2">
-                  <AiFillAudio />
-                </button>
-                <button onClick={stopRecording} type="button" className="text-2xl px-2">
-                  <FaRegStopCircle />
-                </button>
+      <div className="user_chats w-[1030px] border-t">
+        <div className="flex items-center">
+          <div className="flex justify-center items-center">
+            <div className="icons flex justify-between items-center text-2xl">
+              <div className="">
+                <div>
+                  <ReactMic
+                    record={record}
+                    className="sound-wave w-[100px]"
+                    onStop={onStop}
+                    onData={onData}
+                  />
+                  <button
+                    onClick={startRecording}
+                    type="button"
+                    className="text-white font-bold text-2xl hover:text-gray-500 p-2"
+                  >
+                    <AiFillAudio />
+                  </button>
+                  <button
+                    onClick={stopRecording}
+                    type="button"
+                    className="text-white font-bold text-2xl hover:text-gray-500 p-2"
+                  >
+                    <FaRegStopCircle />
+                  </button>
+                </div>
+              </div>
+
+              <div className="text-white font-bold text-2xl hover:text-gray-500 pt-4">
+                <label htmlFor="file-input" onClick={handleIconClick}>
+                  <MdOutlineInsertPhoto />
+                </label>
+                {showFileInput && (
+                  <input
+                    type="file"
+                    id="file-input"
+                    style={{ display: "none" }}
+                    onChange={(e) => {
+                      // console.log(e.target.files)
+                      // return
+                      if (e.target.files[0].type.startsWith("video/")) {
+                        setVideo(e.target.files[0]);
+                      } else if (e.target.files[0].type.startsWith("image/")) {
+                        setImg(e.target.files[0]);
+                      } else {
+                        setDocumentFile(e.target.files[0]);
+                      }
+                    }}
+                  />
+                )}
               </div>
             </div>
-            <div className="text-white font-bold text-xl">
-              {/* <FaVideo /> */}
-            </div>
-            <div className="text-white font-bold text-2xl hover:text-gray-500">
-              <label htmlFor="file-input" onClick={handleIconClick}> 
-                <MdOutlineInsertPhoto />
-              </label> 
-              {showFileInput && (
-                <input
-                  type="file"
-                  id="file-input"
-                  style={{ display: "none" }}
-                  onChange={(e) => {
-                    // console.log(e.target.files)
-                    // return
-                    if (e.target.files[0].type.startsWith("video/")) {
-                      setVideo(e.target.files[0]);
-                    } else if(e.target.files[0].type.startsWith("image/")){
-                      setImg(e.target.files[0]);
-                    }else{
-                      setDocumentFile(e.target.files[0]);
-                    }
-                  }}
-                />
-              )}
-            </div>
           </div>
-          <div className="w-full">
-            <AppInp
-              label="Type a message..."
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-            />
-          </div>
-          <div>
-            <AppBtn label="Send" onClick={handleSend} />
+
+          <div className="flex justify-center items-center px-2 space-x-3">
+            <div className="w-[800px]">
+              <AppInp
+                label="Type a message..."
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+              />
+            </div>
+            <div className="w-[75px]">
+              <AppBtn label="Send" onClick={handleSend} />
+            </div>
           </div>
         </div>
       </div>
+
     </div>
   );
 }
